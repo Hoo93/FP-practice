@@ -28,21 +28,27 @@ const reduce = (f,acc,iter) => {
         iter = acc[Symbol.iterator]();
         acc = iter.next().value;
     }
+
     for (const a of iter) {
         acc = f(acc, a);
     }
     return acc
 }
 
+const add = (a, b) => a + b;
+
+// 인자를 받아서 하나의 값으로 축약하는 함수
+// 처음 인자를 받아서 다음 인자인 함수에 적용해 값을 만들고 그 결과를 다음 함수에 전달
+
 const go = (...args) => reduce((a, f) => f(a), args);
 
-go(
-    0,
-    a=> a+1,
-    a=> a+10,
-    a => a+100,
-    console.log
-)
+// go(
+//     0,
+//     a=> a+1,
+//     a=> a+10,
+//     a => a+100,
+//     console.log
+// )
 
 const isIterable = (a) => a && typeof a[Symbol.iterator];
 
@@ -53,3 +59,11 @@ const lazyFlatten = function *(iter) {
     }
 }
 
+module.exports = {
+    range,
+    reduce,
+    add,
+    go,
+    isIterable,
+    lazyFlatten,
+};
